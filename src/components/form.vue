@@ -11,6 +11,8 @@
 
 
 <script>
+import AuthService from "../services/authService";
+
 export default {
   name: "form-v1",
   props: {
@@ -23,11 +25,23 @@ export default {
   mounted() {
     this.name = this.items && this.items.name ? this.items.name : "";
     this.email = this.items && this.items.email ? this.items.email : "";
+
+    AuthService.register({ email: this.email })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
   methods: {
     submit() {
       console.log("submit");
-      this.$emit("user-data", { id:this.items&& this.items.id?this.items.id:0,name: this.name, email: this.email });
+      this.$emit("user-data", {
+        id: this.items && this.items.id ? this.items.id : 0,
+        name: this.name,
+        email: this.email,
+      });
     },
     clear() {
       this.name = "";
