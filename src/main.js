@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-import { store } from './store/index'
+import store from './store/index'
 import * as VeeValidate from "vee-validate";
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import VueCookies from 'vue-cookies'

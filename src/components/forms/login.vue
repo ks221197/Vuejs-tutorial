@@ -66,7 +66,10 @@ export default {
                 "user",
                 JSON.stringify(response.data.user[0])
               );
-              this.$router.push({ name: "post" });
+
+              this.$store.commit("setUser");
+              // this.$store.dispatch("login");
+              this.$router.push("/post");
             }
             if (response.error) {
               console.log(response);

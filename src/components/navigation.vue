@@ -2,7 +2,8 @@
   <v-app-bar app color="#059999" dark>
     <v-toolbar-title>XYZ</v-toolbar-title>
     <v-spacer></v-spacer>
-    {{user}}
+    {{ user }}
+
     <v-btn
       v-if="!user"
       color="white lighten-3"
@@ -44,20 +45,13 @@ export default {
       open: false,
     };
   },
-  created() {
-    // this.user = localStorage.getItem("user");
-  },
+  created() {},
   watch: {},
+  mounted() {},
 
   computed: {
     user() {
-      // user: {
-      // get: function () {
-      return localStorage.getItem("user");
-      // },
-      // set: function (value) {
-      // return value;
-      // },
+      return this.$store.getters.currentUser;
     },
   },
   methods: {
@@ -72,6 +66,8 @@ export default {
           if (response.data.isLoggedOut) {
             localStorage.removeItem("user");
             this.$cookies.remove("Authorization");
+            // this.$store.dispatch("logout");
+            this.$store.commit("removeUser");
             this.$router.push({ name: "login" });
           }
           if (response.error) {
