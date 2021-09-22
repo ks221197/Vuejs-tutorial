@@ -12,6 +12,7 @@
             v-model="loginPayload.email"
             label="E-mail"
             :error-messages="errors[0]"
+            @click="isValid = false"
           ></v-text-field>
         </ValidationProvider>
 
@@ -25,15 +26,16 @@
             label="Password"
             type="password"
             :error-messages="errors[0]"
+            @click="isValid = false"
           ></v-text-field>
         </ValidationProvider>
-
-        <span v-if="customError.length > 0">{{ customError[0] }}</span>
 
         <v-btn class="mr-4" @click="submit" :disabled="invalid || isValid">
           submit
         </v-btn>
-        <!-- <v-btn @click="clear"> clear </v-btn> -->
+        <span v-if="customError.length > 0" style="color: red">{{
+          customError[0]
+        }}</span>
       </form>
     </ValidationObserver>
   </div>
@@ -72,6 +74,7 @@ export default {
               this.$router.push("/post");
             }
             if (response.error) {
+              this.customError.push(response.message);
               console.log(response);
             }
           })
@@ -80,11 +83,6 @@ export default {
           });
       }
     },
-    // async clear() {
-    //   this.loginPayload.password = "";
-    //   this.loginPayload.email = "";
-    //   await this.$refs.form.reset();
-    // },
   },
 };
 </script>

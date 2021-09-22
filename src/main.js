@@ -12,6 +12,7 @@ Vue.use(VeeValidate);
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.use(VueCookies)
+export const bus = new Vue();
 new Vue({
   router,
   vuetify,

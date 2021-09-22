@@ -2,7 +2,6 @@
   <v-app-bar app color="#059999" dark>
     <v-toolbar-title>XYZ</v-toolbar-title>
     <v-spacer></v-spacer>
-    {{ user }}
 
     <v-btn
       v-if="!user"
@@ -11,9 +10,34 @@
       outlined
       class="ma-2 nav-btn"
       @click="register"
-      >Sign in</v-btn
+      >Register</v-btn
     >
-    <v-btn
+    <v-menu offset-y bottom left v-if="user">
+      <template #activator="{ on }">
+        <v-btn icon v-on="on">
+          <v-avatar size="44">
+            <img :src="`http://localhost:3000/` + user.avatar" :alt="user.name"
+          /></v-avatar>
+        </v-btn>
+      </template>
+
+      <v-list dense min-width="120px">
+        <v-list-item-group active-class="nav-dropdown">
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title> Profile</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click="logout">
+            <v-list-item-content>
+              <v-list-item-title> Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
+
+    <!-- <v-btn
       v-else
       color="white lighten-3"
       text
@@ -21,7 +45,7 @@
       class="ma-2 nav-btn"
       @click="logout"
       >Logout
-    </v-btn>
+    </v-btn> -->
 
     <Dialog :isShow="open" @click="open = false">
       <register />
@@ -51,7 +75,9 @@ export default {
 
   computed: {
     user() {
-      return this.$store.getters.currentUser;
+      return typeof this.$store.getters.currentUser === "string"
+        ? JSON.parse(this.$store.getters.currentUser)
+        : this.$store.getters.currentUser;
     },
   },
   methods: {
@@ -96,5 +122,9 @@ export default {
   background-color: #059999;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+.nav-dropdown {
+  color: #1c8282 !important;
+  caret-color: #1c8282 !important;
 }
 </style>

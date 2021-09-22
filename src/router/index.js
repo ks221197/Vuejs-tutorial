@@ -13,7 +13,22 @@ export default new Router({
         {
             path: '/post',
             name: 'post',
-            component: () => import("../pages/post/index.vue")
+            component: () => import("../pages/post/index.vue"),
         },
+        {
+            path: '/post/create',
+            name: 'create',
+            component: () => import("../pages/post/create.vue"),
+        },
+        {
+            path: '/post22/:id',
+            name: 'detail2',
+            component: () => import("../pages/post/dV1.vue"),
+        },
+        {
+            path: '/post/:id',
+            name: 'detail',
+            component: () => import("../pages/post/detail.vue"),
+        }
     ],
 })

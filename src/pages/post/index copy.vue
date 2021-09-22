@@ -1,22 +1,17 @@
 <template>
-  <v-container
-    fluid
-    fill-height
-    class="full-home"
-    style="max-height: 100vh; align-items: baseline"
-  >
-    <v-row style="padding-top: 17px" justify="space-around">
-      <v-col cols="10">
-        <v-row>
-          <v-col>
-            <h1  style="color: #1c8282">Posts</h1>
+  <v-container grid-list-md text-md-center fluid fill-height>
+    <v-row justify="space-around">
+      <v-col md="10">
+        <v-row style="padding-top: 17px" justify="space-between">
+          <v-col class="text-left" style="color: #1c8282">
+            <h1>Posts</h1>
           </v-col>
           <v-col class="text-right">
             <v-btn to="/post/create">New Post</v-btn>
-          </v-col>
-        </v-row>
+          </v-col></v-row
+        >
 
-        <v-row justify="space-around" no-gutters>
+        <v-row justify="space-around">
           <v-col>
             <v-row dense>
               <v-col
@@ -32,9 +27,7 @@
                     height="200px"
                   >
                   </v-img>
-                  <v-card-title style="font-weight: bold">
-                    {{ item.title }}
-                  </v-card-title>
+                  <v-card-title> {{ item.title }} </v-card-title>
 
                   <v-card-text class="text--primary">
                     <div>{{ item.description.slice(0, 100) }}...</div>
@@ -42,7 +35,7 @@
                   <v-card-subtitle> {{ item.createdAt }} </v-card-subtitle>
                   <v-btn
                     text
-                    style="color: #1c8282"
+                    color="deep-purple accent-4"
                     :to="{ name: 'detail', params: { id: item.postId } }"
                   >
                     Read
