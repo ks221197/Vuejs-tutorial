@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 export default () => {
   const options = {};
-  options.baseURL = 'http://localhost:3000';
+  options.baseURL = process.env.NODE_ENV==='local'?'http://localhost:3000/':'https://csv-be.herokuapp.com/';
   options.headers = {}
   // options.headers.Authorization = Vue.$cookies.get('Authorization')
 
