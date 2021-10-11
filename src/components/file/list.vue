@@ -28,7 +28,8 @@
                   <v-btn
                     color="#22439f"
                     class="ma-2 white--text"
-                    @click="viewFile(file)"
+                    @click="viewFile(file, index)"
+                    :loading="viewLoader[index]"
                   >
                     View
                   </v-btn>
@@ -36,13 +37,10 @@
                     class="ma-2 white--text"
                     color="#d8a838"
                     @click.stop="openPanel()"
-                    @click.prevent="exportFile(file)"
-                    @click="loader = 'loading'"
+                    @click.prevent="exportFile(file, index)"
+                    :loading="exportLoader[index]"
                   >
                     Export
-                    <template v-slot:loader>
-                      <span>Exporting...</span>
-                    </template>
                   </v-btn>
                 </div>
               </v-expansion-panel-header>
@@ -84,7 +82,8 @@ export default {
       isError: false,
       error: "",
     },
-    loading: false,
+    exportLoader: [],
+    viewLoader: [],
     // uploadedFiles: [
     //   {
     //     lastModified: "1632734032659",
@@ -115,17 +114,19 @@ export default {
       this.panel = currentHeader === undefined ? 0 : undefined;
     },
 
-    async viewFile(file) {
+    async viewFile(file, index) {
+      this.viewLoader[index] = true;
       this.fileData = [];
       const response = await this.viewFileApi(file);
       this.fileData = response;
+      this.viewLoader[index] = false;
     },
 
-    async exportFile(file) {
-      this.loading = true;
+    async exportFile(file, index) {
+      this.exportLoader[index] = true;
       const fileData = await this.viewFileApi(file);
       await this.exportFileApi(fileData);
-      this.loading = false;
+      this.exportLoader[index] = false;
     },
 
     async viewFileApi(file) {
@@ -155,8 +156,6 @@ export default {
             //download
             await ExportService.download(fileData.table + ".sql").then(
               (response) => {
-                console.log(response);
-
                 if (response.error) {
                   this.axiosError.isError = true;
                   this.axiosError.error = response.message;

@@ -1,3 +1,3 @@
-const fileType=['csv','xls','xlsx']
+const fileType=['csv','xlsx']
 
 module.exports = { fileType }

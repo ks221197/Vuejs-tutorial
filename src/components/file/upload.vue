@@ -38,7 +38,7 @@
           width="fit-content"
           outlined
         >
-          Only <strong>CSV/SHEET</strong> files are allowed!!
+          Only <strong>.csv/.xlsx</strong> files are allowed!!
         </v-alert>
       </v-col>
     </v-row>
