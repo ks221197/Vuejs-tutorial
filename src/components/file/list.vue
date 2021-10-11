@@ -36,9 +36,9 @@
                   <v-btn
                     class="ma-2 white--text"
                     color="#d8a838"
+                    :loading="exportLoader[index]"
                     @click.stop="openPanel()"
                     @click.prevent="exportFile(file, index)"
-                    :loading="exportLoader[index]"
                   >
                     Export
                   </v-btn>

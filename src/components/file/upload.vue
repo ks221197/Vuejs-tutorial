@@ -76,13 +76,14 @@ export default {
     uploadFiles(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (files.length > 0) {
-        files.forEach((file) => {
-          if (!new RegExp(fileType.join("|")).test(file.type)) {
+        // files.forEach((file) => {
+        for (let i = 0; i < files.length; i++) {
+          if (!new RegExp(fileType.join("|")).test(files[i].type)) {
             this.fileValidation = true;
           } else {
-            this.uploadedFiles.push(file);
+            this.uploadedFiles.push(files[i]);
           }
-        });
+        }
       }
       this.$emit("files", this.uploadedFiles);
     },
