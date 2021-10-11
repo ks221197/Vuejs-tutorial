@@ -32,7 +32,6 @@ export default {
         return this.openDialog;
       },
       set(value) {
-        console.log(value);
         this.$emit("dialog", value);
       },
     },

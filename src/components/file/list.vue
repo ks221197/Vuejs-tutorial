@@ -37,8 +37,12 @@
                     color="#d8a838"
                     @click.stop="openPanel()"
                     @click.prevent="exportFile(file)"
+                    @click="loader = 'loading'"
                   >
                     Export
+                    <template v-slot:loader>
+                      <span>Exporting...</span>
+                    </template>
                   </v-btn>
                 </div>
               </v-expansion-panel-header>
@@ -80,6 +84,7 @@ export default {
       isError: false,
       error: "",
     },
+    loading: false,
     // uploadedFiles: [
     //   {
     //     lastModified: "1632734032659",
@@ -117,8 +122,10 @@ export default {
     },
 
     async exportFile(file) {
+      this.loading = true;
       const fileData = await this.viewFileApi(file);
       await this.exportFileApi(fileData);
+      this.loading = false;
     },
 
     async viewFileApi(file) {
@@ -148,14 +155,23 @@ export default {
             //download
             await ExportService.download(fileData.table + ".sql").then(
               (response) => {
-                var fileURL = window.URL.createObjectURL(new Blob([response]));
-                var fileLink = document.createElement("a");
+                console.log(response);
 
-                fileLink.href = fileURL;
-                fileLink.setAttribute("download", `${fileData.table}.sql`);
-                document.body.appendChild(fileLink);
+                if (response.error) {
+                  this.axiosError.isError = true;
+                  this.axiosError.error = response.message;
+                } else {
+                  var fileURL = window.URL.createObjectURL(
+                    new Blob([response])
+                  );
+                  var fileLink = document.createElement("a");
 
-                fileLink.click();
+                  fileLink.href = fileURL;
+                  fileLink.setAttribute("download", `${fileData.table}.sql`);
+                  document.body.appendChild(fileLink);
+
+                  fileLink.click();
+                }
               }
             );
           }
